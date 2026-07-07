@@ -47,13 +47,48 @@ marks = marks[
 
 student_sql = """
 INSERT INTO students
-(Student_ID, First_Name, Last_Name, Gender, Age, Department, Semester, City, State, Admission_Year)
-VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+(
+Student_ID,
+First_Name,
+Last_Name,
+Gender,
+Age,
+Department,
+Semester,
+City,
+State,
+Admission_Year,
+CGPA,
+Scholarship_Status,
+Hostel_Status,
+Fee_Status,
+Placement_Eligible
+)
+
+VALUES
+(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
 """
 
 student_values = [
-    tuple(row)
-    for row in students.values
+    (
+        row["Student_ID"],
+        row["First_Name"],
+        row["Last_Name"],
+        row["Gender"],
+        row["Age"],
+        row["Department"],
+        row["Semester"],
+        row["City"],
+        row["State"],
+        row["Admission_Year"],
+        row["CGPA"],
+        row["Scholarship_Status"],
+        row["Hostel_Status"],
+        row["Fee_Status"],
+        row["Placement_Eligible"]
+    )
+
+    for _, row in students.iterrows()
 ]
 
 cursor.executemany(student_sql, student_values)
